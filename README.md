@@ -1,2 +1,1 @@
-# url-shortener-ui
-URL Shortener UI
+# URL Shortener Infra
