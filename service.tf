@@ -5,7 +5,7 @@ resource "aws_ecs_service" "this" {
   cluster         = aws_ecs_cluster.this.id
   task_definition = aws_ecs_task_definition.this.id
 
-  desired_count = length(data.aws_subnet_ids.private.ids)
+  desired_count = 1 # length(data.aws_subnet_ids.private.ids)
 
   deployment_maximum_percent         = 150
   deployment_minimum_healthy_percent = 0
