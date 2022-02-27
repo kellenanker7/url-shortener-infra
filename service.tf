@@ -3,9 +3,9 @@ resource "aws_ecs_service" "this" {
   launch_type = "FARGATE"
 
   cluster         = aws_ecs_cluster.this.id
-  task_definition = aws_ecs_task_definition.this.id
+  task_definition = "${aws_ecs_task_definition.this.id}:${aws_ecs_task_definition.this.revision}"
 
-  desired_count = 1 # length(data.aws_subnet_ids.private.ids)
+  desired_count = length(data.aws_subnets.private.ids)
 
   deployment_maximum_percent         = 150
   deployment_minimum_healthy_percent = 0
@@ -14,7 +14,7 @@ resource "aws_ecs_service" "this" {
   wait_for_steady_state              = true
 
   network_configuration {
-    subnets          = data.aws_subnet_ids.private.ids
+    subnets          = data.aws_subnets.private.ids
     security_groups  = [aws_security_group.ecs_tasks.id]
     assign_public_ip = false
   }

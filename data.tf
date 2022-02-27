@@ -4,8 +4,11 @@ data "aws_vpc" "this" {
   }
 }
 
-data "aws_subnet_ids" "public" {
-  vpc_id = data.aws_vpc.this.id
+data "aws_subnets" "public" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.this.id]
+  }
 
   filter {
     name   = "tag:Name"
@@ -13,8 +16,11 @@ data "aws_subnet_ids" "public" {
   }
 }
 
-data "aws_subnet_ids" "private" {
-  vpc_id = data.aws_vpc.this.id
+data "aws_subnets" "private" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.this.id]
+  }
 
   filter {
     name   = "tag:Name"
